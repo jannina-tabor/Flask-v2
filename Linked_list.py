@@ -83,5 +83,14 @@ class LinkedList:
             result.append(current.data)
             current = current.next
         return result
+    
+    def to_list(self):
+        """Return the linked list as a regular Python list."""
+        current = self.head
+        result = []
+        while current:
+            result.append(current.data)
+            current = current.next
+        return result
             
 Linked_list = LinkedList()

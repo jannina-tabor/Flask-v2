@@ -7,6 +7,7 @@
     <meta name="keywords" content="Linked List, Insert, Remove, Search, Data Structures">
     <title>Linked List Operations</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <header>
@@ -15,7 +16,7 @@
 
     <main>
         <div class="operations">
-            <form method="POST" action="{{ url_for('update') }}">
+            <form id="linked-list-form" method="POST" action="{{ url_for('update') }}">
                 <div class="buttons">
                     <button type="submit" name="operation" value="insert_beginning" aria-label="Insert at the beginning of the list">Insert at Beginning</button>
                     <button type="submit" name="operation" value="insert_end" aria-label="Insert at the end of the list">Insert at End</button>
@@ -40,7 +41,43 @@
         {% endwith %}
 
         <h2>Current List:</h2>
-        <p>{{ linked_list }}</p>
+        <div id="linked-list">
+            {% if linked_list %}
+                <ul>
+                    {% for item in linked_list %}
+                        <li>{{ item }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No elements in the list yet.</p>
+            {% endif %}
+        </div>
+
+        <script>
+            $(document).ready(function(){
+                //Intercept the form submit and send it via AJAX sabon char haha
+                $('#linked-list-form').on('submit', function(e) {
+                    e.preventDefault();     // Prevention default from submission
+
+                    var formData = $(this).serialize();     // Get from data
+
+                    $.ajax({
+                        url:'/update',
+                        method: 'POST',
+                        data: formData,
+                        success: function(response) {
+                            var listItems = response.linked_list.map(function(item) {
+                                return "<li>" + item + "</li>";
+                            }).join("");
+                            $('#linked-list').html('<ul>' + listItems + '</ul>');
+                        },
+                        error: function(error) {
+                            alert("An error occurred: " + error);
+                        }
+                        });
+                });
+            });
+        </script>
     </main>
 </body>
 </html>
