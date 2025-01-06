@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Perform Linked List Operations online such as Insert, Remove, and Search.">
+    <meta name="keywords" content="Linked List, Insert, Remove, Search, Data Structures">
+    <title>Linked List Operations</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Linked List Operations</h1>
+    </header>
+
+    <main>
+        <div class="operations">
+            <form method="POST" action="{{ url_for('update') }}">
+                <div class="buttons">
+                    <button type="submit" name="operation" value="insert_beginning" aria-label="Insert at the beginning of the list">Insert at Beginning</button>
+                    <button type="submit" name="operation" value="insert_end" aria-label="Insert at the end of the list">Insert at End</button>
+                    <button type="submit" name="operation" value="remove_beginning" aria-label="Remove from beginning of the list">Remove from Beginning</button>
+                    <button type="submit" name="operation" value="remove_end" aria-label= "Remove from end of the list">Remove from End</button>
+                    <button type="submit" name="operation" value="remove_at" aria-label="Remove a specific element from the list">Remove Specific</button>
+                    <button type="submit" name="operation" value="search" aria-label="Search an element from the list">Search</button>
+                </div>
+                <label for="data">Enter Data:</label>
+                <input type="text" name="data" id="data" placeholder="Enter value here">
+            </form>
+        </div>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        <h2>Current List:</h2>
+        <p>{{ linked_list }}</p>
+    </main>
+</body>
+</html>
